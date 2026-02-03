@@ -17,190 +17,181 @@ body{margin:0;font-family:'Montserrat',sans-serif;background:#ffd6e0;height:100v
 @keyframes float{to{transform:translateY(110vh) rotate(360deg)}}
 
 /* Card */
-.glass-card{background:var(--glass);backdrop-filter:blur(12px);border-radius:30px;padding:40px;text-align:center;width:90%;max-width:460px;box-shadow:0 20px 60px rgba(255,77,109,.3);position:relative;z-index:2;border:2px solid white}
+.glass-card{background:var(--glass);backdrop-filter:blur(12px);border-radius:30px;padding:40px;text-align:center;width:92%;max-width:480px;box-shadow:0 20px 60px rgba(255,77,109,.3);position:relative;z-index:2;border:2px solid white}
 h1,h3,.handwritten{font-family:'Dancing Script',cursive;color:var(--primary)}
+
 .pulse-btn{background:var(--primary);color:white;border:none;border-radius:50px;cursor:pointer;animation:heartbeat 1.2s infinite;box-shadow:0 10px 20px rgba(255,77,109,.4)}
 @keyframes heartbeat{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
-.hidden{display:none}
 
-/* Heart-shaped final image */
-.heart-frame{
-  width:200px;
-  height:180px;
-  margin:auto;
-  position:relative;
-}
-.heart-frame img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  clip-path: path("M100 30 C100 -10, 0 -10, 0 60 C0 120, 100 160, 100 160 C100 160, 200 120, 200 60 C200 -10, 100 -10, 100 30 Z");
-  border:4px solid white;
-}
+.hidden{display:none}
+.moment-img{width:85%;border-radius:15px;margin-bottom:15px;border:4px solid white}
 
 /* Scratch */
 .scratch-container{position:relative;width:280px;height:280px;margin:auto;border-radius:15px;overflow:hidden}
 .scratch-text{position:absolute;inset:0;z-index:1;padding:10px;box-sizing:border-box}
 canvas{position:absolute;inset:0;z-index:2}
 
-/* Crying cat */
-#catSad img{width:150px;border-radius:12px}
+/* Heart shaped final image */
+.heart-frame{
+width:220px;height:200px;margin:auto;
+clip-path:path("M110 190 L20 95 A55 55 0 1 1 110 55 A55 55 0 1 1 200 95 Z");
+overflow:hidden;border:4px solid var(--primary)
+}
+.heart-frame img{width:100%;height:100%;object-fit:cover}
+
+/* Crying section */
+#crySection img{width:150px;border-radius:12px;margin-top:10px}
 </style>
 </head>
-
 <body>
 
-<div id="hearts-container"></div>
+<div id="hearts"></div>
 
 <div class="glass-card">
+
+<!-- STAGE 1 -->
 <div id="stage1">
-    <h1>Hey Tanishka ❤️</h1>
+<h1>Hey Tanishka ❤️</h1>
 
-    <div id="askButtons" class="hidden">
-        <p>Will you be my Valentine?</p>
-        <div style="margin-top:25px;height:120px;display:flex;flex-direction:column;align-items:center;gap:10px;">
-            <button id="yesBtn" class="pulse-btn" style="padding:15px 45px;font-size:1.2rem;">YES! ❤️</button>
-            <button id="noBtn" style="padding:8px 20px;border-radius:20px;border:1px solid #ffccd5;background:white;color:#888;">No</button>
-        </div>
+<button id="openBtn" class="pulse-btn" onclick="startApp()" style="padding:15px 35px;margin-top:10px">Open My Heart</button>
 
-        <div id="catSad" class="hidden" style="margin-top:15px;">
-            <img src="https://media.tenor.com/7vG1XN1q_pAAAAAi/cat-crying.gif">
-            <p class="handwritten">Awww… don’t break my heart 🥺</p>
-        </div>
-    </div>
-
-    <button id="openBtn" onclick="startApp()" class="pulse-btn" style="padding:15px 35px;">Open My Heart</button>
+<div id="askButtons" class="hidden" style="margin-top:20px">
+<p>Will you be my Valentine?</p>
+<button id="yesBtn" class="pulse-btn" style="padding:14px 40px;font-size:1.1rem;margin:10px">YES ❤️</button>
+<button id="noBtn" style="padding:8px 18px;border-radius:20px;border:1px solid #ffccd5;background:white">No</button>
 </div>
 
+<div id="crySection" class="hidden">
+<p class="handwritten">🥺 Why are you doing this to me...</p>
+<img src="https://media.tenor.com/7vG1XN1q_pAAAAAi/cat-crying.gif">
+</div>
+</div>
+
+<!-- STAGE 2 -->
 <div id="stage2" class="hidden">
-    <h3>Do you remember when you asked about my favorite moments?</h3>
+<h3>Do you remember these moments?</h3>
 
-    <div id="moment1">
-        <img src="moment1.jpeg" style="width:100%;border-radius:15px;margin-bottom:15px;border:4px solid white">
-        <p style="font-size:.9rem">That day, even when things weren’t perfect, we still made it beautiful. That smile meant everything to me ❤️</p>
-        <button onclick="nextMoment(2)" class="pulse-btn" style="padding:10px 20px;animation:none;">Next Moment →</button>
-    </div>
-
-    <div id="moment2" class="hidden">
-        <p><i>Scratch to reveal ❤️</i></p>
-        <div class="scratch-container">
-            <div class="scratch-text">
-                <img src="moment2.jpeg" style="width:100%;border-radius:15px;margin-bottom:10px;">
-                <p style="font-size:.85rem;font-weight:600;">Yeh toh tumhara bhi favorite hoga I guess… see how cute it is 🥰  
-                That moment wasn’t perfect, but it was ours — and that’s why it’s very, very beautiful to me ❤️</p>
-            </div>
-            <canvas id="scratchCanvas"></canvas>
-        </div>
-        <button onclick="nextMoment(3)" class="pulse-btn" style="padding:10px 20px;margin-top:15px;animation:none;">Final Page…</button>
-    </div>
+<div id="moment1">
+<img src="moment1.jpeg" class="moment-img">
+<p>Yeh toh tumhara bhi favorite hoga ig see how cutee it is thats not perfect but very very bautiful for me as even after chaos we can do better and i have you im very happy ❤️</p>
+<button onclick="nextMoment(2)" class="pulse-btn" style="padding:8px 20px">Next →</button>
 </div>
 
+<div id="moment2" class="hidden">
+<p><i>Scratch to reveal ❤️</i></p>
+<div class="scratch-container">
+<div class="scratch-text">
+<img src="moment2.jpeg" class="moment-img">
+<p style="font-weight:600">Our very first photo together 📸  
+The moment I started wanting us to be a couple.</p>
+</div>
+<canvas id="scratchCanvas"></canvas>
+</div>
+<button onclick="showFinal()" class="pulse-btn" style="padding:8px 20px;margin-top:15px">Final Page 💌</button>
+</div>
+</div>
+
+<!-- STAGE 3 -->
 <div id="stage3" class="hidden">
-    <div class="heart-frame">
-        <img src="us.jpeg">
-    </div>
-    <div id="finalTypewriter" class="handwritten" style="margin-top:20px;font-size:1.1rem;line-height:1.6;"></div>
+<div class="heart-frame">
+<img src="us.jpeg">
 </div>
+<p class="handwritten" id="finalText" style="margin-top:20px;font-size:1.1rem;line-height:1.6"></p>
 </div>
 
-<audio id="suspense" loop src="suspense.mp3"></audio>
-<audio id="meow" src="meow.mp3"></audio>
-<audio id="song" src="song.mp3"></audio>
+</div>
+
+<audio id="suspense" src="suspense.mp3" loop></audio>
+<audio id="song" src="song2.mp3"></audio>
 
 <script>
 /* Floating hearts */
-function createHeart(){
-    const h=document.createElement('div');
-    h.className='heart-bg';
-    h.innerHTML='❤️';
-    h.style.left=Math.random()*100+'vw';
-    h.style.animationDuration=(Math.random()*3+3)+'s';
-    document.body.appendChild(h);
-    setTimeout(()=>h.remove(),6000);
-}
-setInterval(createHeart,300);
+setInterval(()=>{
+let h=document.createElement("div");
+h.className="heart-bg";
+h.innerHTML="❤️";
+h.style.left=Math.random()*100+"vw";
+h.style.animationDuration=(Math.random()*3+2)+"s";
+document.body.appendChild(h);
+setTimeout(()=>h.remove(),5000);
+},300);
 
 /* Start */
 function startApp(){
-    openBtn.classList.add('hidden');
-    askButtons.classList.remove('hidden');
-    suspense.play();
+document.getElementById("openBtn").classList.add("hidden");
+document.getElementById("askButtons").classList.remove("hidden");
+document.getElementById("suspense").play();
 }
 
-/* No button */
+/* No button escape */
 let noCount=0;
-noBtn.addEventListener('mouseover',()=>{
-    if(noCount<3){
-        noBtn.style.position='absolute';
-        noBtn.style.left=Math.random()*70+'%';
-        noBtn.style.top=Math.random()*70+'%';
-        noCount++;
-    }else{
-        catSad.classList.remove('hidden');
-        meow.play();
-        noBtn.style.display='none';
-    }
+const noBtn=document.getElementById("noBtn");
+noBtn.addEventListener("mouseover",()=>{
+if(noCount<4){
+noBtn.style.position="absolute";
+noBtn.style.left=Math.random()*70+"%";
+noBtn.style.top=Math.random()*70+"%";
+navigator.vibrate?.(100);
+noCount++;
+}else{
+document.getElementById("crySection").classList.remove("hidden");
+}
 });
 
 /* YES */
-yesBtn.addEventListener('click',()=>{
-    confetti({particleCount:150,spread:80,origin:{y:.6}});
-    stage1.classList.add('hidden');
-    stage2.classList.remove('hidden');
-});
+document.getElementById("yesBtn").onclick=()=>{
+navigator.vibrate?.([200,100,200]);
+confetti({particleCount:200,spread:80});
+document.getElementById("stage1").classList.add("hidden");
+document.getElementById("stage2").classList.remove("hidden");
+document.getElementById("suspense").pause();
+}
+
+/* Moments */
+function nextMoment(n){
+document.getElementById("moment1").classList.add("hidden");
+document.getElementById("moment2").classList.remove("hidden");
+initScratch();
+}
 
 /* Scratch */
 function initScratch(){
-    const canvas=document.getElementById('scratchCanvas');
-    const ctx=canvas.getContext('2d');
-    canvas.width=280;canvas.height=280;
-    ctx.fillStyle='#bbb';ctx.fillRect(0,0,280,280);
-    ctx.globalCompositeOperation='destination-out';
-
-    function scratch(x,y){ctx.beginPath();ctx.arc(x,y,25,0,Math.PI*2);ctx.fill();}
-    canvas.addEventListener('mousemove',e=>{
-        const r=canvas.getBoundingClientRect();
-        scratch(e.clientX-r.left,e.clientY-r.top);
-    });
-    canvas.addEventListener('touchmove',e=>{
-        e.preventDefault();
-        const r=canvas.getBoundingClientRect();
-        scratch(e.touches[0].clientX-r.left,e.touches[0].clientY-r.top);
-    },{passive:false});
+let canvas=document.getElementById("scratchCanvas");
+let ctx=canvas.getContext("2d");
+canvas.width=280;canvas.height=280;
+ctx.fillStyle="#ccc";ctx.fillRect(0,0,280,280);
+ctx.globalCompositeOperation="destination-out";
+function scratch(e){
+let r=canvas.getBoundingClientRect();
+let x=(e.clientX||e.touches[0].clientX)-r.left;
+let y=(e.clientY||e.touches[0].clientY)-r.top;
+ctx.beginPath();ctx.arc(x,y,25,0,Math.PI*2);ctx.fill();
+}
+canvas.addEventListener("mousemove",scratch);
+canvas.addEventListener("touchmove",e=>{e.preventDefault();scratch(e)});
 }
 
-function nextMoment(n){
-    if(n===2){moment1.classList.add('hidden');moment2.classList.remove('hidden');initScratch();}
-    if(n===3)showFinal();
-}
-
-/* Final message */
+/* Final */
 function showFinal(){
-    stage2.classList.add('hidden');
-    stage3.classList.remove('hidden');
-    suspense.pause();
-    song.play();
+document.getElementById("stage2").classList.add("hidden");
+document.getElementById("stage3").classList.remove("hidden");
+let song=document.getElementById("song");
+song.currentTime=20;
+song.volume=0.7;
+song.play();
 
-    const msg=`Yeh toh tumhara bhi favorite hoga I guess… see how cute it is 💖  
-That’s not perfect, but very very beautiful for me — because even after chaos, we can still make things better.  
+let msg=`NEVER overthink anything my cutie ❤️  
+तुम मेरे बस में नहीं आओगी तो तुम्हारे ऊपर ट्रक जाएगा। 😂  
+I missed you Tanishka! You make every moment special. ❤️`;
 
-And I have you… so I’m very happy 😊  
-Never overthink anything, my cutie ❤️  
-
-I missed you, Tanishka. You make every moment special
-तुम मेरे बस में नहीं आओगी तो तुम्हारे ऊपर ट्रक जाएगा.`;
-
-    let i=0;
-    function type(){
-        if(i<msg.length){
-            finalTypewriter.innerHTML+=msg.charAt(i);
-            i++;
-            setTimeout(type,45);
-        }
-    }
-    type();
+let i=0;
+function type(){
+if(i<msg.length){
+document.getElementById("finalText").innerHTML+=msg.charAt(i);
+i++;setTimeout(type,40);
+}}
+type();
 }
 </script>
-
 </body>
 </html>
