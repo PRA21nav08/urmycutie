@@ -9,74 +9,41 @@
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
 <style>
-:root { --primary:#ff4d6d; --glass:rgba(255,255,255,.95); }
-
-body{
-    margin:0;
-    font-family:'Montserrat',sans-serif;
-    background:#ffd6e0;
-    height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    overflow:hidden;
-}
+:root{--primary:#ff4d6d;--glass:rgba(255,255,255,.95)}
+body{margin:0;font-family:'Montserrat',sans-serif;background:#ffd6e0;height:100vh;display:flex;justify-content:center;align-items:center;overflow:hidden}
 
 /* Floating hearts */
-.heart-bg{
-    position:fixed;
-    top:-10%;
-    font-size:22px;
-    animation:float linear forwards;
-    color:rgba(255,77,109,.35);
-    z-index:0;
-}
-@keyframes float{to{transform:translateY(110vh) rotate(360deg);}}
+.heart-bg{position:fixed;top:-10%;font-size:22px;animation:float linear forwards;color:rgba(255,77,109,.35);z-index:0}
+@keyframes float{to{transform:translateY(110vh) rotate(360deg)}}
 
 /* Card */
-.glass-card{
-    background:var(--glass);
-    backdrop-filter:blur(12px);
-    border-radius:30px;
-    padding:40px;
-    text-align:center;
-    width:90%;
-    max-width:460px;
-    box-shadow:0 20px 60px rgba(255,77,109,.3);
-    position:relative;
-    z-index:2;
-    border:2px solid white;
-}
-
+.glass-card{background:var(--glass);backdrop-filter:blur(12px);border-radius:30px;padding:40px;text-align:center;width:90%;max-width:460px;box-shadow:0 20px 60px rgba(255,77,109,.3);position:relative;z-index:2;border:2px solid white}
 h1,h3,.handwritten{font-family:'Dancing Script',cursive;color:var(--primary)}
-
-.pulse-btn{
-    background:var(--primary);
-    color:white;
-    border:none;
-    border-radius:50px;
-    cursor:pointer;
-    animation:heartbeat 1.2s infinite;
-    box-shadow:0 10px 20px rgba(255,77,109,.4);
-}
+.pulse-btn{background:var(--primary);color:white;border:none;border-radius:50px;cursor:pointer;animation:heartbeat 1.2s infinite;box-shadow:0 10px 20px rgba(255,77,109,.4)}
 @keyframes heartbeat{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
-
-.moment-img{width:100%;border-radius:15px;margin-bottom:15px;border:4px solid white}
 .hidden{display:none}
 
-/* Scratch */
-.scratch-container{
-    position:relative;
-    width:280px;
-    height:280px;
-    margin:auto;
-    border-radius:15px;
-    overflow:hidden;
+/* Heart-shaped final image */
+.heart-frame{
+  width:200px;
+  height:180px;
+  margin:auto;
+  position:relative;
 }
-.scratch-text{position:absolute;inset:0;z-index:1;padding:10px;box-sizing:border-box}
-canvas{position:absolute;inset:0;z-index:2;cursor:crosshair}
+.heart-frame img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  clip-path: path("M100 30 C100 -10, 0 -10, 0 60 C0 120, 100 160, 100 160 C100 160, 200 120, 200 60 C200 -10, 100 -10, 100 30 Z");
+  border:4px solid white;
+}
 
-/* Sad cat popup */
+/* Scratch */
+.scratch-container{position:relative;width:280px;height:280px;margin:auto;border-radius:15px;overflow:hidden}
+.scratch-text{position:absolute;inset:0;z-index:1;padding:10px;box-sizing:border-box}
+canvas{position:absolute;inset:0;z-index:2}
+
+/* Crying cat */
 #catSad img{width:150px;border-radius:12px}
 </style>
 </head>
@@ -95,22 +62,22 @@ canvas{position:absolute;inset:0;z-index:2;cursor:crosshair}
             <button id="yesBtn" class="pulse-btn" style="padding:15px 45px;font-size:1.2rem;">YES! ❤️</button>
             <button id="noBtn" style="padding:8px 20px;border-radius:20px;border:1px solid #ffccd5;background:white;color:#888;">No</button>
         </div>
+
+        <div id="catSad" class="hidden" style="margin-top:15px;">
+            <img src="https://media.tenor.com/7vG1XN1q_pAAAAAi/cat-crying.gif">
+            <p class="handwritten">Awww… don’t break my heart 🥺</p>
+        </div>
     </div>
 
     <button id="openBtn" onclick="startApp()" class="pulse-btn" style="padding:15px 35px;">Open My Heart</button>
-
-    <div id="catSad" class="hidden">
-        <img src="https://media.tenor.com/7vG1XN1q_pAAAAAi/cat-crying.gif">
-        <p class="handwritten">Awww... don’t break my heart 🥺</p>
-    </div>
 </div>
 
 <div id="stage2" class="hidden">
     <h3>Do you remember when you asked about my favorite moments?</h3>
 
     <div id="moment1">
-        <img src="moment1.jpeg" class="moment-img">
-        <p style="font-size:.85rem">That day you smiled at my effort meant everything ❤️</p>
+        <img src="moment1.jpeg" style="width:100%;border-radius:15px;margin-bottom:15px;border:4px solid white">
+        <p style="font-size:.9rem">That day, even when things weren’t perfect, we still made it beautiful. That smile meant everything to me ❤️</p>
         <button onclick="nextMoment(2)" class="pulse-btn" style="padding:10px 20px;animation:none;">Next Moment →</button>
     </div>
 
@@ -118,8 +85,9 @@ canvas{position:absolute;inset:0;z-index:2;cursor:crosshair}
         <p><i>Scratch to reveal ❤️</i></p>
         <div class="scratch-container">
             <div class="scratch-text">
-                <img src="moment2.jpeg" class="moment-img">
-                <p style="font-size:.85rem;font-weight:600;">Still my favorite picture of you ❤️</p>
+                <img src="moment2.jpeg" style="width:100%;border-radius:15px;margin-bottom:10px;">
+                <p style="font-size:.85rem;font-weight:600;">Yeh toh tumhara bhi favorite hoga I guess… see how cute it is 🥰  
+                That moment wasn’t perfect, but it was ours — and that’s why it’s very, very beautiful to me ❤️</p>
             </div>
             <canvas id="scratchCanvas"></canvas>
         </div>
@@ -128,8 +96,8 @@ canvas{position:absolute;inset:0;z-index:2;cursor:crosshair}
 </div>
 
 <div id="stage3" class="hidden">
-    <div style="width:180px;height:180px;margin:auto;background:white;border-radius:50%;padding:10px;border:3px solid var(--primary);">
-        <img src="us.jpeg" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">
+    <div class="heart-frame">
+        <img src="us.jpeg">
     </div>
     <div id="finalTypewriter" class="handwritten" style="margin-top:20px;font-size:1.1rem;line-height:1.6;"></div>
 </div>
@@ -159,7 +127,7 @@ function startApp(){
     suspense.play();
 }
 
-/* No button drama */
+/* No button */
 let noCount=0;
 noBtn.addEventListener('mouseover',()=>{
     if(noCount<3){
@@ -181,7 +149,7 @@ yesBtn.addEventListener('click',()=>{
     stage2.classList.remove('hidden');
 });
 
-/* Scratch card */
+/* Scratch */
 function initScratch(){
     const canvas=document.getElementById('scratchCanvas');
     const ctx=canvas.getContext('2d');
@@ -189,9 +157,7 @@ function initScratch(){
     ctx.fillStyle='#bbb';ctx.fillRect(0,0,280,280);
     ctx.globalCompositeOperation='destination-out';
 
-    function scratch(x,y){
-        ctx.beginPath();ctx.arc(x,y,25,0,Math.PI*2);ctx.fill();
-    }
+    function scratch(x,y){ctx.beginPath();ctx.arc(x,y,25,0,Math.PI*2);ctx.fill();}
     canvas.addEventListener('mousemove',e=>{
         const r=canvas.getBoundingClientRect();
         scratch(e.clientX-r.left,e.clientY-r.top);
@@ -215,14 +181,21 @@ function showFinal(){
     suspense.pause();
     song.play();
 
-    const msg="Yeh toh tumhara bhi favorite hoga ig see how cutee it is thats not perfect but very very bautiful for me as even after chaos we can do better and i have you im very happy
-        NEVER overthink anything my cutie तुम मेरे बस में नहीं आओगी तो तुम्हारे ऊपर ट्रक जाएगा। 😂 I missed you Tanishka! You make every moment special.  ";
+    const msg=`Yeh toh tumhara bhi favorite hoga I guess… see how cute it is 💖  
+That’s not perfect, but very very beautiful for me — because even after chaos, we can still make things better.  
+
+And I have you… so I’m very happy 😊  
+Never overthink anything, my cutie ❤️  
+
+I missed you, Tanishka. You make every moment special
+तुम मेरे बस में नहीं आओगी तो तुम्हारे ऊपर ट्रक जाएगा.`;
+
     let i=0;
     function type(){
         if(i<msg.length){
             finalTypewriter.innerHTML+=msg.charAt(i);
             i++;
-            setTimeout(type,50);
+            setTimeout(type,45);
         }
     }
     type();
@@ -231,5 +204,3 @@ function showFinal(){
 
 </body>
 </html>
-
-
