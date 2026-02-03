@@ -1,97 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For Tanishka ❤️</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    <style>
-        :root { --primary: #ff4d6d; --glass: rgba(255, 255, 255, 0.95); }
-        body {
-            margin: 0; font-family: 'Montserrat', sans-serif;
-            background: #ffccd5;
-            height: 100vh; display: flex; justify-content: center; align-items: center; overflow: hidden;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Tanishka ❤️</title>
 
-        .heart-bg { position: fixed; top: -10%; color: rgba(255, 77, 109, 0.4); user-select: none; z-index: 1; animation: float linear forwards; font-size: 24px; }
-        @keyframes float { to { transform: translateY(110vh) rotate(360deg); } }
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
-        .glass-card {
-            background: var(--glass); backdrop-filter: blur(10px);
-            border-radius: 30px; padding: 40px; text-align: center;
-            width: 85%; max-width: 450px; box-shadow: 0 20px 50px rgba(255, 77, 109, 0.3);
-            z-index: 10; position: relative; border: 2px solid white;
-        }
+<style>
+:root { --primary:#ff4d6d; --glass:rgba(255,255,255,.95); }
 
-        h1, h3, .handwritten { font-family: 'Dancing Script', cursive; color: var(--primary); }
-        
-        /* The Heartbeat Animation for Buttons */
-        .pulse-btn {
-            background: var(--primary); color: white; border: none; 
-            border-radius: 50px; cursor: pointer;
-            animation: heartbeat 1.2s infinite ease-in-out;
-            box-shadow: 0 10px 20px rgba(255, 77, 109, 0.4);
-        }
-        @keyframes heartbeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+body{
+    margin:0;
+    font-family:'Montserrat',sans-serif;
+    background:#ffd6e0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+}
 
-        .moment-img { width: 100%; border-radius: 15px; margin-bottom: 15px; border: 4px solid white; }
-        .hidden { display: none; }
-        .scratch-container { position: relative; width: 280px; height: 280px; margin: 0 auto; background: #eee; border-radius: 15px; overflow: hidden; }
-        .scratch-text { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; padding: 10px; box-sizing: border-box; }
-        canvas { position: absolute; top: 0; left: 0; z-index: 2; cursor: crosshair; }
-    </style>
+/* Floating hearts */
+.heart-bg{
+    position:fixed;
+    top:-10%;
+    font-size:22px;
+    animation:float linear forwards;
+    color:rgba(255,77,109,.35);
+    z-index:0;
+}
+@keyframes float{to{transform:translateY(110vh) rotate(360deg);}}
+
+/* Card */
+.glass-card{
+    background:var(--glass);
+    backdrop-filter:blur(12px);
+    border-radius:30px;
+    padding:40px;
+    text-align:center;
+    width:90%;
+    max-width:460px;
+    box-shadow:0 20px 60px rgba(255,77,109,.3);
+    position:relative;
+    z-index:2;
+    border:2px solid white;
+}
+
+h1,h3,.handwritten{font-family:'Dancing Script',cursive;color:var(--primary)}
+
+.pulse-btn{
+    background:var(--primary);
+    color:white;
+    border:none;
+    border-radius:50px;
+    cursor:pointer;
+    animation:heartbeat 1.2s infinite;
+    box-shadow:0 10px 20px rgba(255,77,109,.4);
+}
+@keyframes heartbeat{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
+
+.moment-img{width:100%;border-radius:15px;margin-bottom:15px;border:4px solid white}
+.hidden{display:none}
+
+/* Scratch */
+.scratch-container{
+    position:relative;
+    width:280px;
+    height:280px;
+    margin:auto;
+    border-radius:15px;
+    overflow:hidden;
+}
+.scratch-text{position:absolute;inset:0;z-index:1;padding:10px;box-sizing:border-box}
+canvas{position:absolute;inset:0;z-index:2;cursor:crosshair}
+
+/* Sad cat popup */
+#catSad img{width:150px;border-radius:12px}
+</style>
 </head>
+
 <body>
 
 <div id="hearts-container"></div>
 
 <div class="glass-card">
-    <div id="stage1">
-        <h1 id="mainTitle">Hey Tanishka ❤️</h1>
-        <div id="askButtons" class="hidden">
-            <p>Will you be my Valentine?</p>
-            <div style="margin-top: 25px; height: 120px; display: flex; flex-direction: column; align-items: center; gap: 10px;">
-                <button id="yesBtn" class="pulse-btn" style="padding: 15px 45px; font-size: 1.2rem;">YES! ❤️</button>
-                <button id="noBtn" style="padding: 8px 20px; border-radius: 20px; border: 1px solid #ffccd5; background: white; color: #888;">No</button>
+<div id="stage1">
+    <h1>Hey Tanishka ❤️</h1>
+
+    <div id="askButtons" class="hidden">
+        <p>Will you be my Valentine?</p>
+        <div style="margin-top:25px;height:120px;display:flex;flex-direction:column;align-items:center;gap:10px;">
+            <button id="yesBtn" class="pulse-btn" style="padding:15px 45px;font-size:1.2rem;">YES! ❤️</button>
+            <button id="noBtn" style="padding:8px 20px;border-radius:20px;border:1px solid #ffccd5;background:white;color:#888;">No</button>
+        </div>
+    </div>
+
+    <button id="openBtn" onclick="startApp()" class="pulse-btn" style="padding:15px 35px;">Open My Heart</button>
+
+    <div id="catSad" class="hidden">
+        <img src="https://media.tenor.com/7vG1XN1q_pAAAAAi/cat-crying.gif">
+        <p class="handwritten">Awww... don’t break my heart 🥺</p>
+    </div>
+</div>
+
+<div id="stage2" class="hidden">
+    <h3>Do you remember when you asked about my favorite moments?</h3>
+
+    <div id="moment1">
+        <img src="moment1.jpeg" class="moment-img">
+        <p style="font-size:.85rem">That day you smiled at my effort meant everything ❤️</p>
+        <button onclick="nextMoment(2)" class="pulse-btn" style="padding:10px 20px;animation:none;">Next Moment →</button>
+    </div>
+
+    <div id="moment2" class="hidden">
+        <p><i>Scratch to reveal ❤️</i></p>
+        <div class="scratch-container">
+            <div class="scratch-text">
+                <img src="moment2.jpeg" class="moment-img">
+                <p style="font-size:.85rem;font-weight:600;">Still my favorite picture of you ❤️</p>
             </div>
+            <canvas id="scratchCanvas"></canvas>
         </div>
-        <button id="openBtn" onclick="startApp()" class="pulse-btn" style="padding:15px 35px;">Open My Heart</button>
-        
-        <div id="catSad" class="hidden">
-            <img src="https://media.tenor.com/7vG1XN1q_pAAAAAi/cat-crying.gif" style="width:150px; border-radius:10px;">
-            <p class="handwritten">Ab toh haan bol do... 🥺</p>
-        </div>
+        <button onclick="nextMoment(3)" class="pulse-btn" style="padding:10px 20px;margin-top:15px;animation:none;">Final Page…</button>
     </div>
+</div>
 
-    <div id="stage2" class="hidden">
-        <h3 style="font-size: 1.4rem;">Do you remember when you asked about my favorite moments?There are many even every moment make me feel happy. </h3>
-        
-        <div id="moment1">
-            <img src="moment1.jpeg" class="moment-img">
-            <p style="font-size: 0.85rem;">Do you remember when I was not able to be presented to you by day and make it memorable, but when I tried my best, you were happy and that was one of my favorite moments. ❤️</p>
-            <button onclick="nextMoment(2)" class="pulse-btn" style="padding:10px 20px; animation: none;">Next Moment →</button>
-        </div>
-
-        <div id="moment2" class="hidden">
-            <p style="font-size: 0.9rem;"><i>Scratch to see my favorite...</i></p>
-            <div class="scratch-container">
-                <div class="scratch-text">
-                    <img src="moment2.jpeg" class="moment-img">
-                    <p style="font-size: 0.8rem; font-weight: 600;">The very first picture of us and also my favorite profile picture. ❤️</p>
-                </div>
-                <canvas id="scratchCanvas"></canvas>
-            </div>
-            <button onclick="nextMoment(3)" class="pulse-btn" style="padding:10px 20px; margin-top:15px; animation: none;">The Final Page...</button>
-        </div>
+<div id="stage3" class="hidden">
+    <div style="width:180px;height:180px;margin:auto;background:white;border-radius:50%;padding:10px;border:3px solid var(--primary);">
+        <img src="us.jpeg" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">
     </div>
-
-    <div id="stage3" class="hidden">
-        <div style="width:180px; height:180px; margin:auto; background:white; border-radius: 50%; padding: 10px; border: 3px solid var(--primary);">
-            <img src="us.jpeg" style="width:100%; height:100%; object-fit:cover; border-radius: 50%;">
-        </div>
-        <div id="finalTypewriter" class="handwritten" style="margin-top:20px; font-size: 1.1rem; line-height: 1.6;"></div>
-    </div>
+    <div id="finalTypewriter" class="handwritten" style="margin-top:20px;font-size:1.1rem;line-height:1.6;"></div>
+</div>
 </div>
 
 <audio id="suspense" loop src="suspense.mp3"></audio>
@@ -99,91 +140,95 @@
 <audio id="song" src="song.mp3"></audio>
 
 <script>
-    function createHeart() {
-        const heart = document.createElement('div');
-        heart.classList.add('heart-bg');
-        heart.innerHTML = '❤️';
-        heart.style.left = Math.random() * 100 + 'vw';
-        heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
-        document.getElementById('hearts-container').appendChild(heart);
-        setTimeout(() => heart.remove(), 5000);
+/* Floating hearts */
+function createHeart(){
+    const h=document.createElement('div');
+    h.className='heart-bg';
+    h.innerHTML='❤️';
+    h.style.left=Math.random()*100+'vw';
+    h.style.animationDuration=(Math.random()*3+3)+'s';
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),6000);
+}
+setInterval(createHeart,300);
+
+/* Start */
+function startApp(){
+    openBtn.classList.add('hidden');
+    askButtons.classList.remove('hidden');
+    suspense.play();
+}
+
+/* No button drama */
+let noCount=0;
+noBtn.addEventListener('mouseover',()=>{
+    if(noCount<3){
+        noBtn.style.position='absolute';
+        noBtn.style.left=Math.random()*70+'%';
+        noBtn.style.top=Math.random()*70+'%';
+        noCount++;
+    }else{
+        catSad.classList.remove('hidden');
+        meow.play();
+        noBtn.style.display='none';
     }
-    setInterval(createHeart, 300);
+});
 
-    let noCount = 0;
-    const noBtn = document.getElementById('noBtn');
+/* YES */
+yesBtn.addEventListener('click',()=>{
+    confetti({particleCount:150,spread:80,origin:{y:.6}});
+    stage1.classList.add('hidden');
+    stage2.classList.remove('hidden');
+});
 
-    function startApp() {
-        document.getElementById('openBtn').classList.add('hidden');
-        document.getElementById('askButtons').classList.remove('hidden');
-        document.getElementById('suspense').play();
+/* Scratch card */
+function initScratch(){
+    const canvas=document.getElementById('scratchCanvas');
+    const ctx=canvas.getContext('2d');
+    canvas.width=280;canvas.height=280;
+    ctx.fillStyle='#bbb';ctx.fillRect(0,0,280,280);
+    ctx.globalCompositeOperation='destination-out';
+
+    function scratch(x,y){
+        ctx.beginPath();ctx.arc(x,y,25,0,Math.PI*2);ctx.fill();
     }
-
-    noBtn.addEventListener('mouseover', () => {
-        if (noCount < 3) {
-            noBtn.style.position = 'absolute';
-            noBtn.style.left = Math.random() * 70 + '%';
-            noBtn.style.top = Math.random() * 70 + '%';
-            noCount++;
-        } else {
-            document.getElementById('catSad').classList.remove('hidden');
-            document.getElementById('meow').play();
-            noBtn.style.display = 'none';
-        }
+    canvas.addEventListener('mousemove',e=>{
+        const r=canvas.getBoundingClientRect();
+        scratch(e.clientX-r.left,e.clientY-r.top);
     });
+    canvas.addEventListener('touchmove',e=>{
+        e.preventDefault();
+        const r=canvas.getBoundingClientRect();
+        scratch(e.touches[0].clientX-r.left,e.touches[0].clientY-r.top);
+    },{passive:false});
+}
 
-    document.getElementById('yesBtn').addEventListener('click', () => {
-        confetti({ particleCount: 150, spread: 70, colors: ['#ff4d6d', '#ffffff'] });
-        document.getElementById('stage1').classList.add('hidden');
-        document.getElementById('stage2').classList.remove('hidden');
-    });
+function nextMoment(n){
+    if(n===2){moment1.classList.add('hidden');moment2.classList.remove('hidden');initScratch();}
+    if(n===3)showFinal();
+}
 
-    function nextMoment(num) {
-        if (num === 2) {
-            document.getElementById('moment1').classList.add('hidden');
-            document.getElementById('moment2').classList.remove('hidden');
-            initScratch();
-        } else if (num === 3) {
-            showFinal();
+/* Final message */
+function showFinal(){
+    stage2.classList.add('hidden');
+    stage3.classList.remove('hidden');
+    suspense.pause();
+    song.play();
+
+    const msg="Yeh toh tumhara bhi favorite hoga ig see how cutee it is thats not perfect but very very bautiful for me as even after chaos we can do better and i have you im very happy
+        NEVER overthink anything my cutie ";
+    let i=0;
+    function type(){
+        if(i<msg.length){
+            finalTypewriter.innerHTML+=msg.charAt(i);
+            i++;
+            setTimeout(type,50);
         }
     }
-
-    function initScratch() {
-        const canvas = document.getElementById('scratchCanvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = 280; canvas.height = 280;
-        ctx.fillStyle = '#d1d1d1';
-        ctx.fillRect(0, 0, 280, 280);
-        ctx.globalCompositeOperation = 'destination-out';
-        
-        function scratch(e) {
-            const rect = canvas.getBoundingClientRect();
-            const x = (e.clientX || e.touches[0].clientX) - rect.left;
-            const y = (e.clientY || e.touches[0].clientY) - rect.top;
-            ctx.beginPath(); ctx.arc(x, y, 30, 0, Math.PI * 2); ctx.fill();
-        }
-        canvas.addEventListener('mousemove', scratch);
-        canvas.addEventListener('touchmove', (e) => { e.preventDefault(); scratch(e); });
-    }
-
-    function showFinal() {
-        document.getElementById('stage2').classList.add('hidden');
-        document.getElementById('stage3').classList.remove('hidden');
-        document.getElementById('suspense').pause();
-        document.getElementById('song').play();
-
-        const msg = " तुम मेरे बस में नहीं आओगी तो तुम्हारे ऊपर ट्रक जाएगा। 😂\n\nI love you Tanishka! You make every moment special. ❤️";
-        let i = 0;
-        function type() {
-            if (i < msg.length) {
-                document.getElementById('finalTypewriter').innerHTML += msg.charAt(i);
-                i++;
-                setTimeout(type, 60);
-            }
-        }
-        type();
-    }
+    type();
+}
 </script>
+
 </body>
 </html>
 
