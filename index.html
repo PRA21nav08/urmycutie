@@ -4,202 +4,185 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>For Tanishka ❤️</title>
-    
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
     <style>
-        :root {
-            --primary: #ff4d6d;
-            --glass: rgba(255, 255, 255, 0.85);
-        }
-
+        :root { --primary: #ff4d6d; --glass: rgba(255, 255, 255, 0.95); }
         body {
-            margin: 0;
-            font-family: 'Montserrat', sans-serif;
-            background: radial-gradient(circle at top right, #fff1f2, #ffccd5);
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
+            margin: 0; font-family: 'Montserrat', sans-serif;
+            background: #ffccd5;
+            height: 100vh; display: flex; justify-content: center; align-items: center; overflow: hidden;
         }
 
-        /* Falling Petals Background */
-        .petal {
-            position: fixed;
-            top: -10%;
-            color: #ff4d6d;
-            user-select: none;
-            z-index: 1;
-            pointer-events: none;
-            animation: fall linear forwards;
-        }
+        .heart-bg { position: fixed; top: -10%; color: rgba(255, 77, 109, 0.4); user-select: none; z-index: 1; animation: float linear forwards; font-size: 24px; }
+        @keyframes float { to { transform: translateY(110vh) rotate(360deg); } }
 
-        @keyframes fall {
-            to { transform: translateY(110vh) rotate(360deg); }
-        }
-
-        /* Glass Card Container */
         .glass-card {
-            background: var(--glass);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            border-radius: 40px;
-            padding: 40px;
-            text-align: center;
-            width: 90%;
-            max-width: 500px;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
-            z-index: 10;
+            background: var(--glass); backdrop-filter: blur(10px);
+            border-radius: 30px; padding: 40px; text-align: center;
+            width: 85%; max-width: 450px; box-shadow: 0 20px 50px rgba(255, 77, 109, 0.3);
+            z-index: 10; position: relative; border: 2px solid white;
         }
 
-        h1 { font-family: 'Dancing Script', cursive; color: var(--primary); font-size: 3.2rem; margin: 0 0 10px 0; }
-        p { color: #555; line-height: 1.6; }
-
-        /* HEARTBEAT YES BUTTON */
-        @keyframes heartbeat {
-            0% { transform: scale(1); }
-            15% { transform: scale(1.1); }
-            30% { transform: scale(1); }
-            45% { transform: scale(1.15); }
-            100% { transform: scale(1); }
-        }
-
-        #yesBtn {
-            background: var(--primary);
-            color: white;
-            padding: 18px 45px;
-            border: none;
-            border-radius: 60px;
-            font-size: 1.3rem;
-            font-weight: 600;
-            cursor: pointer;
-            box-shadow: 0 10px 25px rgba(255, 77, 109, 0.4);
+        h1, h3, .handwritten { font-family: 'Dancing Script', cursive; color: var(--primary); }
+        
+        /* The Heartbeat Animation for Buttons */
+        .pulse-btn {
+            background: var(--primary); color: white; border: none; 
+            border-radius: 50px; cursor: pointer;
             animation: heartbeat 1.2s infinite ease-in-out;
-            transition: transform 0.3s;
+            box-shadow: 0 10px 20px rgba(255, 77, 109, 0.4);
         }
+        @keyframes heartbeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
 
-        #noBtn {
-            background: #fff;
-            color: #999;
-            padding: 15px 35px;
-            border: 1px solid #ddd;
-            border-radius: 60px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        /* Heart Frame for Photo */
-        .heart-frame {
-            width: 220px;
-            height: 200px;
-            margin: 20px auto;
-            background: #fff;
-            clip-path: path('M110 35c-30-50-110-35-110 50 0 55 70 100 110 145 40-45 110-90 110-145 0-85-80-100-110-50z');
-            display: none;
-            border: 5px solid white;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        }
-        .heart-frame img { width: 100%; height: 100%; object-fit: cover; }
-
-        .handwritten {
-            font-family: 'Dancing Script', cursive;
-            font-size: 1.5rem;
-            color: var(--primary);
-            margin-top: 20px;
-            line-height: 1.5;
-            white-space: pre-line;
-            opacity: 0;
-        }
-
-        .btn-group { display: flex; justify-content: center; gap: 25px; align-items: center; min-height: 160px; }
+        .moment-img { width: 100%; border-radius: 15px; margin-bottom: 15px; border: 4px solid white; }
+        .hidden { display: none; }
+        .scratch-container { position: relative; width: 280px; height: 280px; margin: 0 auto; background: #eee; border-radius: 15px; overflow: hidden; }
+        .scratch-text { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; padding: 10px; box-sizing: border-box; }
+        canvas { position: absolute; top: 0; left: 0; z-index: 2; cursor: crosshair; }
     </style>
 </head>
 <body>
 
-<div class="glass-card" id="card">
-    <div id="init">
-        <h1>Hi Tanishka ❤️</h1>
-        <p>There is a piece of my heart I want to share with you...</p>
-        <button onclick="reveal()" style="background:var(--primary); color:white; padding:12px 30px; border-radius:50px; border:none; cursor:pointer; font-weight:600;">Open Heart</button>
-    </div>
+<div id="hearts-container"></div>
 
-    <div id="ask" style="display:none;">
-        <p style="font-weight: 500; font-size: 1.2rem;">Tanishka, will you be my Valentine?</p>
-        <div class="btn-group">
-            <button id="yesBtn">YES! ❤️</button>
-            <button id="noBtn">No</button>
+<div class="glass-card">
+    <div id="stage1">
+        <h1 id="mainTitle">Hey Tanishka ❤️</h1>
+        <div id="askButtons" class="hidden">
+            <p>Will you be my Valentine?</p>
+            <div style="margin-top: 25px; height: 120px; display: flex; flex-direction: column; align-items: center; gap: 10px;">
+                <button id="yesBtn" class="pulse-btn" style="padding: 15px 45px; font-size: 1.2rem;">YES! ❤️</button>
+                <button id="noBtn" style="padding: 8px 20px; border-radius: 20px; border: 1px solid #ffccd5; background: white; color: #888;">No</button>
+            </div>
+        </div>
+        <button id="openBtn" onclick="startApp()" class="pulse-btn" style="padding:15px 35px;">Open My Heart</button>
+        
+        <div id="catSad" class="hidden">
+            <img src="https://media.tenor.com/7vG1XN1q_pAAAAAi/cat-crying.gif" style="width:150px; border-radius:10px;">
+            <p class="handwritten">Ab toh haan bol do... 🥺</p>
         </div>
     </div>
 
-    <div id="result" style="display:none;">
-        <div class="heart-frame" id="photo"><img src="us.jpeg"></div>
-        <div id="typewriter" class="handwritten"></div>
+    <div id="stage2" class="hidden">
+        <h3 style="font-size: 1.4rem;">Do you remember when you asked about my favorite moments?</h3>
+        
+        <div id="moment1">
+            <img src="moment1.jpeg" class="moment-img">
+            <p style="font-size: 0.85rem;">Do you remember when I was not able to be presented to you by day and make it memorable, but when I tried my best, you were happy and that was one of my favorite moments. ❤️</p>
+            <button onclick="nextMoment(2)" class="pulse-btn" style="padding:10px 20px; animation: none;">Next Moment →</button>
+        </div>
+
+        <div id="moment2" class="hidden">
+            <p style="font-size: 0.9rem;"><i>Scratch to see my favorite...</i></p>
+            <div class="scratch-container">
+                <div class="scratch-text">
+                    <img src="moment2.jpeg" class="moment-img">
+                    <p style="font-size: 0.8rem; font-weight: 600;">The one on the car bonnet. Still my favorite profile picture. ❤️</p>
+                </div>
+                <canvas id="scratchCanvas"></canvas>
+            </div>
+            <button onclick="nextMoment(3)" class="pulse-btn" style="padding:10px 20px; margin-top:15px; animation: none;">The Final Page...</button>
+        </div>
+    </div>
+
+    <div id="stage3" class="hidden">
+        <div style="width:180px; height:180px; margin:auto; background:white; border-radius: 50%; padding: 10px; border: 3px solid var(--primary);">
+            <img src="us.jpeg" style="width:100%; height:100%; object-fit:cover; border-radius: 50%;">
+        </div>
+        <div id="finalTypewriter" class="handwritten" style="margin-top:20px; font-size: 1.1rem; line-height: 1.6;"></div>
     </div>
 </div>
 
-<audio id="song"><source src="song.mp3" type="audio/mpeg"></audio>
-<audio id="suspense" loop><source src="suspense.mp3" type="audio/mpeg"></audio>
+<audio id="suspense" loop src="suspense.mp3"></audio>
+<audio id="meow" src="meow.mp3"></audio>
+<audio id="song" src="song.mp3"></audio>
 
 <script>
-    // Rose Petal Effect
-    function createPetal() {
-        const petal = document.createElement('div');
-        petal.classList.add('petal');
-        petal.innerHTML = '🌸';
-        petal.style.left = Math.random() * 100 + 'vw';
-        petal.style.fontSize = Math.random() * 10 + 15 + 'px';
-        petal.style.animationDuration = Math.random() * 3 + 4 + 's';
-        petal.style.opacity = Math.random();
-        document.body.appendChild(petal);
-        setTimeout(() => petal.remove(), 7000);
+    function createHeart() {
+        const heart = document.createElement('div');
+        heart.classList.add('heart-bg');
+        heart.innerHTML = '❤️';
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
+        document.getElementById('hearts-container').appendChild(heart);
+        setTimeout(() => heart.remove(), 5000);
     }
-    setInterval(createPetal, 300);
+    setInterval(createHeart, 300);
 
-    const yesBtn = document.getElementById('yesBtn');
+    let noCount = 0;
     const noBtn = document.getElementById('noBtn');
-    const song = document.getElementById('song');
-    const suspense = document.getElementById('suspense');
 
-    function reveal() {
-        document.getElementById('init').style.display = 'none';
-        document.getElementById('ask').style.display = 'block';
-        suspense.play();
+    function startApp() {
+        document.getElementById('openBtn').classList.add('hidden');
+        document.getElementById('askButtons').classList.remove('hidden');
+        document.getElementById('suspense').play();
     }
 
-    let scale = 1;
     noBtn.addEventListener('mouseover', () => {
-        noBtn.style.position = 'fixed';
-        noBtn.style.left = Math.random() * 80 + '%';
-        noBtn.style.top = Math.random() * 80 + '%';
-        scale += 0.3;
-        yesBtn.style.transform = `scale(${scale})`;
+        if (noCount < 3) {
+            noBtn.style.position = 'absolute';
+            noBtn.style.left = Math.random() * 70 + '%';
+            noBtn.style.top = Math.random() * 70 + '%';
+            noCount++;
+        } else {
+            document.getElementById('catSad').classList.remove('hidden');
+            document.getElementById('meow').play();
+            noBtn.style.display = 'none';
+        }
     });
 
-    yesBtn.addEventListener('click', () => {
-        suspense.pause();
-        song.play();
-        confetti({ particleCount: 200, spread: 80, origin: { y: 0.6 } });
+    document.getElementById('yesBtn').addEventListener('click', () => {
+        confetti({ particleCount: 150, spread: 70, colors: ['#ff4d6d', '#ffffff'] });
+        document.getElementById('stage1').classList.add('hidden');
+        document.getElementById('stage2').classList.remove('hidden');
+    });
 
-        document.getElementById('ask').style.display = 'none';
-        document.getElementById('result').style.display = 'block';
-        document.getElementById('photo').style.display = 'block';
+    function nextMoment(num) {
+        if (num === 2) {
+            document.getElementById('moment1').classList.add('hidden');
+            document.getElementById('moment2').classList.remove('hidden');
+            initScratch();
+        } else if (num === 3) {
+            showFinal();
+        }
+    }
 
-        const finalMsg = "See what we have painted... maybe it's not perfect but it's the most beautiful thing.\n\nTanishka, you mean so much to me. Never feel anything else or overthink because you are my world. ❤️\n\nLekin yaad rakhna, agar tum mere bus mein nhi aayi toh tumhare upar se truck jaega! 😂\n\nForever yours,\nPranav ❤️";
+    function initScratch() {
+        const canvas = document.getElementById('scratchCanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = 280; canvas.height = 280;
+        ctx.fillStyle = '#d1d1d1';
+        ctx.fillRect(0, 0, 280, 280);
+        ctx.globalCompositeOperation = 'destination-out';
         
+        function scratch(e) {
+            const rect = canvas.getBoundingClientRect();
+            const x = (e.clientX || e.touches[0].clientX) - rect.left;
+            const y = (e.clientY || e.touches[0].clientY) - rect.top;
+            ctx.beginPath(); ctx.arc(x, y, 30, 0, Math.PI * 2); ctx.fill();
+        }
+        canvas.addEventListener('mousemove', scratch);
+        canvas.addEventListener('touchmove', (e) => { e.preventDefault(); scratch(e); });
+    }
+
+    function showFinal() {
+        document.getElementById('stage2').classList.add('hidden');
+        document.getElementById('stage3').classList.remove('hidden');
+        document.getElementById('suspense').pause();
+        document.getElementById('song').play();
+
+        const msg = "क्या तुम मेरे बस में अगर तुम मेरे बस में नहीं आओगी तो तुम्हारे ऊपर ट्रक जाएगा। 😂\n\nI love you Tanishka! You make every moment special. ❤️";
         let i = 0;
-        const target = document.getElementById('typewriter');
-        target.style.opacity = 1;
         function type() {
-            if (i < finalMsg.length) {
-                target.innerHTML += finalMsg.charAt(i);
+            if (i < msg.length) {
+                document.getElementById('finalTypewriter').innerHTML += msg.charAt(i);
                 i++;
-                setTimeout(type, 50);
+                setTimeout(type, 60);
             }
         }
         type();
-    });
+    }
 </script>
 </body>
 </html>
