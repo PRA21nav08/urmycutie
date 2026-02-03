@@ -1,217 +1,302 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For Tanishka ❤️</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Tanishka ❤️</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
-<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        :root {
+            --primary: #ff4d6d;
+            --secondary: #ff8fa3;
+            --glass: rgba(255, 255, 255, 0.2);
+            --text: #4a4a4a;
+        }
 
-<style>
-  body {
-    margin: 0;
-    font-family: 'Poppins', sans-serif;
-    overflow: hidden;
-    background: linear-gradient(135deg, #ffd6e0, #ffeaf4);
-    transition: background 1.5s ease;
-  }
-  canvas { position: fixed; inset: 0; z-index: -1; }
-  .container { height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; }
-  
-  .card {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(15px);
-    padding: 30px;
-    border-radius: 30px;
-    text-align: center;
-    max-width: 480px;
-    width: 100%;
-    box-shadow: 0 25px 70px rgba(255, 77, 109, .3);
-    z-index: 10;
-    max-height: 95vh;
-    overflow-y: auto;
-  }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
-  h1 { font-family: 'Dancing Script', cursive; color: #ff4d6d; font-size: 2.8rem; margin: 10px 0; }
-  
-  .heart-frame {
-    width: 200px;
-    height: 180px;
-    margin: 20px auto;
-    background-color: #ff4d6d;
-    position: relative;
-    clip-path: path('M100 30c-25-45-100-30-100 45 0 50 60 90 100 130 40-40 100-80 100-130 0-75-75-90-100-45z');
-    display: none;
-    animation: pulse 2s infinite;
-    box-shadow: 0 10px 30px rgba(255, 77, 109, 0.5);
-  }
-  .heart-frame img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: radial-gradient(circle at top right, #fff1f2, #ffd1dc);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
 
-  @keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-    100% { transform: scale(1); }
-  }
+        /* Ambient Background */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
 
-  .buttons { display: flex; justify-content: center; align-items: center; gap: 20px; margin-top: 20px; min-height: 120px; }
-  button { border: none; border-radius: 50px; font-size: 1.1rem; cursor: pointer; transition: 0.3s; font-weight: bold; padding: 15px 35px; }
-  
-  #yesBtn { background: #ff4d6d; color: white; z-index: 100; box-shadow: 0 5px 15px rgba(255, 77, 109, 0.3); }
-  #noBtn { background: #f8f9fa; border: 1px solid #ddd; color: #888; z-index: 50; }
+        /* Glass Card */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 30px;
+            padding: 40px;
+            text-align: center;
+            width: 90%;
+            max-width: 450px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1.5s ease-out;
+            z-index: 10;
+        }
 
-  .truck-container {
-    position: fixed; bottom: 30px; left: -250px; font-size: 4rem;
-    transition: transform 6s linear; z-index: 1000; display: none;
-  }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-  #cryPopup {
-    position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85);
-    display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 2000;
-  }
-  .popup-box { background: white; padding: 35px; border-radius: 25px; text-align: center; animation: shake 0.5s infinite; }
-  .popup-box img { width: 160px; border-radius: 15px; }
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            color: var(--primary);
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
 
-  .handwritten {
-    font-family: 'Dancing Script', cursive;
-    font-size: 1.5rem;
-    color: #ff4d6d;
-    line-height: 1.5;
-    white-space: pre-line;
-    margin-top: 20px;
-    text-align: center;
-  }
+        p { color: var(--text); line-height: 1.6; margin-bottom: 20px; }
 
-  @keyframes shake {
-    0%, 100% { transform: translate(0,0); }
-    25% { transform: translate(-5px, 5px); }
-    50% { transform: translate(5px, -5px); }
-  }
-</style>
+        /* Heart Frame */
+        .heart-container {
+            width: 180px;
+            height: 180px;
+            margin: 0 auto 20px;
+            position: relative;
+            display: none;
+            filter: drop-shadow(0 10px 15px rgba(255, 77, 109, 0.4));
+        }
+
+        .heart-mask {
+            width: 100%;
+            height: 100%;
+            background-color: var(--primary);
+            clip-path: path('M90 30c-25-45-100-30-100 45 0 50 60 90 100 130 40-40 100-80 100-130 0-75-75-90-100-45z');
+            overflow: hidden;
+            border: 5px solid white;
+        }
+
+        .heart-mask img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Buttons */
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+            min-height: 120px;
+            align-items: center;
+        }
+
+        button {
+            padding: 14px 30px;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-size: 1rem;
+        }
+
+        #yesBtn {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 8px 20px rgba(255, 77, 109, 0.3);
+        }
+
+        #noBtn {
+            background: white;
+            color: #888;
+            border: 1px solid #eee;
+        }
+
+        /* Vehicles */
+        .vehicle {
+            position: fixed;
+            bottom: 50px;
+            left: -150px;
+            font-size: 3.5rem;
+            z-index: 100;
+            transition: transform 6s linear;
+        }
+
+        /* Handwritten Section */
+        .handwritten {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.6rem;
+            color: var(--primary);
+            margin-top: 20px;
+            white-space: pre-line;
+            opacity: 0;
+        }
+
+        /* Crying Overlay */
+        #overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+    </style>
 </head>
 <body>
 
-<canvas id="hearts"></canvas>
+<canvas id="bg-canvas"></canvas>
 
-<div class="container">
-  <div class="card" id="card">
-    <h1 id="title">Hi Tanishka ❤️</h1>
-    <p style="color: #666;">I have a very special question for you...</p>
-    <p style="font-weight: 600; color: #ff4d6d; font-size: 1.4rem;">Will you be my Valentine?</p>
-
-    <div class="buttons">
-      <button id="yesBtn">Yes! 🥰</button>
-      <button id="noBtn">No</button>
+<div class="glass-card" id="card">
+    <div id="intro">
+        <h1>Hi Tanishka ❤️</h1>
+        <p>I built this small space just for you. There's something I need to ask...</p>
+        <button onclick="reveal()" id="startBtn" style="background: var(--primary); color: white;">Open Heart</button>
     </div>
-  </div>
+
+    <div id="question" style="display: none;">
+        <p style="font-weight: 600; font-size: 1.2rem;">Will you be my Valentine?</p>
+        <div class="btn-group">
+            <button id="yesBtn">Yes, Always! 🥰</button>
+            <button id="noBtn">No</button>
+        </div>
+    </div>
+
+    <div id="success" style="display: none;">
+        <div class="heart-container" id="photo">
+            <div class="heart-mask">
+                <img src="us.jpeg" alt="Our Memory">
+            </div>
+        </div>
+        <div id="typewriter" class="handwritten"></div>
+    </div>
 </div>
 
-<div id="truck" class="truck-container">🚚</div>
+<div id="bus" class="vehicle">🚌</div>
+<div id="truck" class="vehicle" style="margin-left: -140px;">🚚</div>
 
-<div id="cryPopup">
-  <div class="popup-box">
-    <img src="https://media.giphy.com/media/ROF8OQvDmxytW/giphy.gif">
-    <p style="color: #ff4d6d; font-weight: bold; font-size: 1.2rem;">Tanishka, please don't... 😭</p>
-    <button onclick="closePopup()" style="background:#ff4d6d; color:white; padding:12px 25px; border-radius:25px; border:none; margin-top:15px; cursor:pointer;">I'm sorry, YES! ❤️</button>
-  </div>
+<div id="overlay">
+    <div class="glass-card" style="max-width: 300px;">
+        <img src="https://media.giphy.com/media/ROF8OQvDmxytW/giphy.gif" width="150">
+        <p>Tanishka, why? 😭</p>
+        <button onclick="closeOverlay()" style="background: var(--primary); color: white;">I'm sorry! Click YES ❤️</button>
+    </div>
 </div>
 
-<audio id="suspenseAudio" loop><source src="suspense.mp3" type="audio/mpeg"></audio>
-<audio id="valentineSong"><source src="song.mp3" type="audio/mpeg"></audio>
-<audio id="meowSound"><source src="meow.mp3" type="audio/mpeg"></audio>
+<audio id="suspense"><source src="suspense.mp3" type="audio/mpeg"></audio>
+<audio id="song"><source src="song.mp3" type="audio/mpeg"></audio>
+<audio id="meow"><source src="meow.mp3" type="audio/mpeg"></audio>
 
 <script>
-const canvas = document.getElementById("hearts");
-const ctx = canvas.getContext("2d");
-function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-resize(); window.addEventListener("resize", resize);
-
-let hearts = [];
-for (let i = 0; i < 45; i++) {
-  hearts.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, size: Math.random()*15+10, speed: Math.random()*1+0.5 });
-}
-function draw() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  hearts.forEach(h => {
-    h.y -= h.speed; if (h.y < -20) h.y = canvas.height + 20;
-    ctx.globalAlpha = 0.4; ctx.font = h.size + "px serif"; ctx.fillText("❤️", h.x, h.y);
-  });
-  requestAnimationFrame(draw);
-}
-draw();
-
-const suspense = document.getElementById("suspenseAudio");
-const valentineSong = document.getElementById("valentineSong");
-const meow = document.getElementById("meowSound");
-const yesBtn = document.getElementById("yesBtn");
-const noBtn = document.getElementById("noBtn");
-const cryPopup = document.getElementById("cryPopup");
-
-let noCount = 0;
-let yesScale = 1;
-
-document.addEventListener('click', () => {
-  if (suspense.paused && valentineSong.paused) { suspense.volume = 0.4; suspense.play(); }
-}, { once: true });
-
-noBtn.addEventListener("mouseover", () => {
-  if (noCount < 2) { 
-    noBtn.style.position = "fixed";
-    noBtn.style.left = Math.random() * (window.innerWidth - 150) + "px";
-    noBtn.style.top = Math.random() * (window.innerHeight - 100) + "px";
-    yesScale += 0.5;
-    yesBtn.style.transform = `scale(${yesScale})`;
-    noCount++;
-  }
-});
-
-noBtn.addEventListener("click", () => {
-  cryPopup.style.display = "flex";
-  meow.play();
-});
-
-function closePopup() {
-  cryPopup.style.display = "none";
-  noCount = 0;
-  noBtn.style.position = "static";
-  yesScale = 1;
-  yesBtn.style.transform = "scale(1)";
-}
-
-const finalMsg = "See what we have painted and maybe it's not perfect but it's the most beautiful thing...\n\nTanishka, you mean so much to me. Please never feel anything else or overthink, because you are my world. ❤️\n\nI promise to keep you happy forever... but remember, agar tum bus mein nahi aayi toh truck jaega! 😂🚚\n\nForever yours,\nPranav ❤️";
-
-yesBtn.addEventListener("click", () => {
-  suspense.pause();
-  valentineSong.play();
-  confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
-
-  document.body.style.background = "linear-gradient(135deg, #ff4d6d, #ff8fa3)";
-  document.getElementById("card").innerHTML = `
-    <h1>Always Yours! ❤️</h1>
-    <div class="heart-frame" id="photoFrame" style="display:block;">
-      <img src="us.jpeg" alt="Our Memory">
-    </div>
-    <div id="typewriter" class="handwritten"></div>
-  `;
-
-  const truck = document.getElementById("truck");
-  truck.style.display = "block";
-  setTimeout(() => { truck.style.transform = `translateX(${window.innerWidth + 500}px)`; }, 100);
-
-  let i = 0;
-  function type() {
-    if (i < finalMsg.length) {
-      document.getElementById("typewriter").innerHTML += finalMsg.charAt(i);
-      i++;
-      setTimeout(type, 55);
+    // 1. Smooth Background Particles
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    function init() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        particles = [];
+        for(let i=0; i<30; i++) particles.push({
+            x: Math.random()*canvas.width,
+            y: Math.random()*canvas.height,
+            s: Math.random()*2+1,
+            v: Math.random()*0.5+0.2
+        });
     }
-  }
-  type();
-});
+    function animate() {
+        ctx.clearRect(0,0,canvas.width, canvas.height);
+        ctx.fillStyle = "#ffb3c1";
+        particles.forEach(p => {
+            p.y -= p.v;
+            if(p.y < -10) p.y = canvas.height + 10;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.s, 0, Math.PI*2);
+            ctx.fill();
+        });
+        requestAnimationFrame(animate);
+    }
+    window.addEventListener('resize', init);
+    init(); animate();
+
+    // 2. Control Logic
+    const suspense = document.getElementById('suspense');
+    const song = document.getElementById('song');
+    const meow = document.getElementById('meow');
+    const yesBtn = document.getElementById('yesBtn');
+    const noBtn = document.getElementById('noBtn');
+
+    function reveal() {
+        document.getElementById('intro').style.display = 'none';
+        document.getElementById('question').style.display = 'block';
+        suspense.play();
+    }
+
+    let noCount = 0;
+    let yesScale = 1;
+
+    noBtn.addEventListener('mouseenter', () => {
+        if(noCount < 3) {
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = Math.random() * 80 + '%';
+            noBtn.style.top = Math.random() * 80 + '%';
+            yesScale += 0.4;
+            yesBtn.style.transform = `scale(${yesScale})`;
+            noCount++;
+        }
+    });
+
+    noBtn.addEventListener('click', () => {
+        document.getElementById('overlay').style.display = 'flex';
+        meow.play();
+    });
+
+    function closeOverlay() {
+        document.getElementById('overlay').style.display = 'none';
+        noBtn.style.position = 'static';
+        yesScale = 1;
+        yesBtn.style.transform = 'scale(1)';
+        noCount = 0;
+    }
+
+    yesBtn.addEventListener('click', () => {
+        suspense.pause();
+        song.play();
+        confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 }, colors: ['#ff4d6d', '#ff8fa3', '#ffffff'] });
+
+        document.getElementById('question').style.display = 'none';
+        document.getElementById('success').style.display = 'block';
+        document.getElementById('photo').style.display = 'block';
+        
+        // Show vehicles
+        document.getElementById('bus').style.transform = `translateX(${window.innerWidth + 500}px)`;
+        document.getElementById('truck').style.transform = `translateX(${window.innerWidth + 500}px)`;
+
+        const msg = "See what we have painted...\nMaybe it's not perfect, but it's the most beautiful thing.\n\nTanishka, you mean so much to me. Please never overthink, because you are my world.\n\n(And remember, the truck is right behind the bus! 😂)\n\nForever yours, Pranav ❤️";
+        
+        let i = 0;
+        const typewriter = document.getElementById('typewriter');
+        typewriter.style.opacity = 1;
+        function type() {
+            if (i < msg.length) {
+                typewriter.innerHTML += msg.charAt(i);
+                i++;
+                setTimeout(type, 50);
+            }
+        }
+        type();
+    });
 </script>
 </body>
 </html>
